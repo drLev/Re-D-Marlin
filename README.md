@@ -1,4 +1,4 @@
-# Marlin 3D Printer Firmware
+# Marlin Re-D-Bot 3D Printer Firmware
 <img align="right" src="Documentation/Logo/Marlin%20Logo%20GitHub.png" />
 
  Additional documentation can be found in [our wiki](https://github.com/MarlinFirmware/Marlin/wiki/Main-Page).
