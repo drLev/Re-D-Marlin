@@ -7,3 +7,4 @@ applet/
 *.DS_Store
 *.idea
 /Marlin/Debug
+/.vs
