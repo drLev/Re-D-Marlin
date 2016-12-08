@@ -105,7 +105,7 @@ static void menu_action_setting_edit_callback_long5(const char* pstr, unsigned l
     #define ENCODER_STEPS_PER_MENU_ITEM 5
   #endif
   #ifndef ENCODER_PULSES_PER_STEP
-    #define ENCODER_PULSES_PER_STEP 1
+    #define ENCODER_PULSES_PER_STEP -1
   #endif
 #else
   #ifndef ENCODER_STEPS_PER_MENU_ITEM
