@@ -54,6 +54,7 @@ static void lcd_main_menu();
 static void lcd_tune_menu();
 static void lcd_prepare_menu();
 static void lcd_move_menu();
+static void lcd_move_menu_1mm();
 static void lcd_control_menu();
 static void lcd_control_temperature_menu();
 static void lcd_control_temperature_preheat_pla_settings_menu();
@@ -340,6 +341,7 @@ static void lcd_main_menu()
     {
         MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
     }else{
+        MENU_ITEM(submenu, MSG_MOVE_1MM, lcd_move_menu_1mm);
         MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
 #ifdef DELTA_CALIBRATION_MENU
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
