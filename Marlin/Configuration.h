@@ -780,7 +780,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 //#define FILAMENT_LCD_DISPLAY
 
 
-
+// append axis move control by 1mm in top menu
+#define MENU_MOVE_IN_TOP
 
 
 

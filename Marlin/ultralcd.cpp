@@ -54,7 +54,6 @@ static void lcd_main_menu();
 static void lcd_tune_menu();
 static void lcd_prepare_menu();
 static void lcd_move_menu();
-static void lcd_move_menu_1mm();
 static void lcd_control_menu();
 static void lcd_control_temperature_menu();
 static void lcd_control_temperature_preheat_pla_settings_menu();
@@ -64,6 +63,10 @@ static void lcd_control_volumetric_menu();
 #ifdef DOGLCD
 static void lcd_set_contrast();
 #endif
+#ifdef MENU_MOVE_IN_TOP
+static void lcd_move_menu_1mm_from_start();
+#endif
+
 static void lcd_control_retract_menu();
 static void lcd_sdcard_menu();
 
@@ -341,7 +344,9 @@ static void lcd_main_menu()
     {
         MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
     }else{
-        MENU_ITEM(submenu, MSG_MOVE_1MM, lcd_move_menu_1mm);
+#ifdef MENU_MOVE_IN_TOP
+        MENU_ITEM(submenu, MSG_MOVE_1MM, lcd_move_menu_1mm_from_start);
+#endif
         MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
 #ifdef DELTA_CALIBRATION_MENU
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
@@ -655,6 +660,7 @@ static void lcd_delta_calibrate_menu()
 #endif // DELTA_CALIBRATION_MENU
 
 float move_menu_scale;
+bool move_menu_from_start;
 static void lcd_move_menu_axis();
 
 static void _lcd_move(const char *name, int axis, int min, int max) {
@@ -703,7 +709,12 @@ static void lcd_move_e()
 static void lcd_move_menu_axis()
 {
     START_MENU();
-    MENU_ITEM(back, MSG_MOVE_AXIS, lcd_move_menu);
+    if (move_menu_from_start) {
+      MENU_ITEM(back, MSG_MAIN, lcd_main_menu);
+    }else
+    {
+      MENU_ITEM(back, MSG_MOVE_AXIS, lcd_move_menu);
+    }
     MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x);
     MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y);
     if (move_menu_scale < 10.0)
@@ -716,16 +727,19 @@ static void lcd_move_menu_axis()
 
 static void lcd_move_menu_10mm()
 {
+    move_menu_from_start = false;
     move_menu_scale = 10.0;
     lcd_move_menu_axis();
 }
 static void lcd_move_menu_1mm()
 {
+    move_menu_from_start = false;
     move_menu_scale = 1.0;
     lcd_move_menu_axis();
 }
 static void lcd_move_menu_01mm()
 {
+    move_menu_from_start = false;
     move_menu_scale = 0.1;
     lcd_move_menu_axis();
 }
@@ -740,6 +754,16 @@ static void lcd_move_menu()
     //TODO:X,Y,Z,E
     END_MENU();
 }
+
+#ifdef MENU_MOVE_IN_TOP
+static void lcd_move_menu_1mm_from_start()
+{
+  move_menu_scale = 1.0;
+  move_menu_from_start = true;
+  lcd_move_menu_axis();
+}
+#endif
+
 
 static void lcd_control_menu()
 {
