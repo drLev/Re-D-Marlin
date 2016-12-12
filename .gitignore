@@ -118,3 +118,5 @@ applet/
 #PlatformIO files/dirs
 .pioenvs
 .piolib
+/Marlin/__vm
+/Marlin/Debug
